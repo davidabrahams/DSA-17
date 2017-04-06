@@ -32,6 +32,11 @@ public class Solver {
         }
 
         @Override
+        public String toString() {
+            return "State with board: " + board.toString();
+        }
+
+        @Override
         public boolean equals(Object s) {
             if (s == this) return true;
             if (s == null) return false;
@@ -77,19 +82,26 @@ public class Solver {
             //GET CLOSEST STATE
             State nearestState = Collections.min(availableStates);
             availableStates.remove(nearestState);
-
+            if (nearestState.board.isGoal()) {
+                minMoves = nearestState.moves;
+                solutionState = nearestState;
+//                availableStates.clear();
+//                continue;
+                break;
+            }
             //GET NEIGHBOR FRIENDS
-            List<Board> neighborFriends = (List<Board>) nearestState.board.neighbors();
+            Iterable<Board> neighborFriends = nearestState.board.neighbors();
             for (Board neighbor: neighborFriends) {
                 State neighborState = new State(neighbor, nearestState.moves + 1, nearestState);
-                //CHECK IF GOAL
-                if (neighborState.board.isGoal()) {
-                    minMoves = neighborState.moves;
-                    solutionState = neighborState;
-                    availableStates.clear();
-                } else if (!closedStates.contains(neighborState)) {
+                State A = find(availableStates, neighbor);
+                State B = find(closedStates, neighbor);
+                boolean ignore = false;
+                if (A != null && neighborState.cost > A.cost)
+                    ignore = true;
+                if (B != null && neighborState.cost > B.cost)
+                    ignore = true;
+                if (!ignore)
                     availableStates.add(neighborState);
-                }
             }
             closedStates.add(nearestState);
         }
@@ -100,7 +112,7 @@ public class Solver {
      */
     public boolean isSolvable() {
     	// TODO: Your code here
-        return this.currBoard.solvable(currBoard.tiles);
+        return this.currBoard.solvable();
     }
 
     /*

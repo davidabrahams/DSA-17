@@ -135,7 +135,7 @@ public class PuzzleTest {
     /**
      * Test method for Solver - Hard puzzle
      */
-//    @Test
+    @Test
     public void testSolverInsane() {
 
         // Hard solve puzzle
