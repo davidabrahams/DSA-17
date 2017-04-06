@@ -6,7 +6,6 @@ import static java.lang.Math.abs;
  * Board definition for the 8 Puzzle challenge
  */
 public class Board {
-
     private int n;
     public int[][] tiles;
     private int[][] goal = {{1, 2, 3}, {4, 5, 6}, {7, 8, 0}};
@@ -151,17 +150,6 @@ public class Board {
 
         }
         return neighborFriends;
-    }
-
-
-    private boolean swap(int i, int j, int it, int jt) {
-        if (it < 0 || it >= n || jt < 0 || jt >= n) {
-            return false;
-        }
-        int temp = tiles[i][j];
-        tiles[i][j] = tiles[it][jt];
-        tiles[it][jt] = temp;
-        return true;
     }
 
     /*

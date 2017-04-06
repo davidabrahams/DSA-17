@@ -78,7 +78,7 @@ public class Solver {
             State nearestState = Collections.min(availableStates);
             availableStates.remove(nearestState);
             //GET NEIGHBOR FRIENDS
-            Iterable<Board> neighborFriends = nearestState.board.neighbors();
+            List<Board> neighborFriends = (List<Board>) nearestState.board.neighbors();
             for (Board neighbor: neighborFriends) {
                 State neighborState = new State(neighbor, nearestState.moves + 1, nearestState);
                 if (neighborState.board.isGoal()) {
