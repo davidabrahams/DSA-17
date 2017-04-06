@@ -32,11 +32,6 @@ public class Solver {
         }
 
         @Override
-        public String toString() {
-            return "State with board: " + board.toString();
-        }
-
-        @Override
         public boolean equals(Object s) {
             if (s == this) return true;
             if (s == null) return false;

@@ -20,21 +20,7 @@ public class Board {
     public Board(int[][] b) {
         // TODO: Your code here
         n = b.length;
-        tiles = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            System.arraycopy(b[i], 0, tiles[i], 0, n);
-        }
-    }
-
-    @Override
-    public String toString() {
-        String s = "";
-        for (int[] A : tiles) {
-            for (int i : A)
-                s += i + " ";
-            s += "; ";
-        }
-        return s.substring(0, s.length() - 2);
+        tiles = b;
     }
 
     /*
