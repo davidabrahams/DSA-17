@@ -82,26 +82,25 @@ public class Solver {
             //GET CLOSEST STATE
             State nearestState = Collections.min(availableStates);
             availableStates.remove(nearestState);
-            if (nearestState.board.isGoal()) {
-                minMoves = nearestState.moves;
-                solutionState = nearestState;
-//                availableStates.clear();
-//                continue;
-                break;
-            }
             //GET NEIGHBOR FRIENDS
             Iterable<Board> neighborFriends = nearestState.board.neighbors();
             for (Board neighbor: neighborFriends) {
                 State neighborState = new State(neighbor, nearestState.moves + 1, nearestState);
-                State A = find(availableStates, neighbor);
-                State B = find(closedStates, neighbor);
-                boolean ignore = false;
-                if (A != null && neighborState.cost > A.cost)
-                    ignore = true;
-                if (B != null && neighborState.cost > B.cost)
-                    ignore = true;
-                if (!ignore)
-                    availableStates.add(neighborState);
+                if (neighborState.board.isGoal()) {
+                    minMoves = neighborState.moves;
+                    solutionState = neighborState;
+                    availableStates.clear();
+                } else {
+                    State A = find(availableStates, neighbor);
+                    State B = find(closedStates, neighbor);
+                    boolean ignore = false;
+                    if (A != null && neighborState.cost > A.cost)
+                        ignore = true;
+                    if (B != null && neighborState.cost > B.cost)
+                        ignore = true;
+                    if (!ignore)
+                        availableStates.add(neighborState);
+                }
             }
             closedStates.add(nearestState);
         }
